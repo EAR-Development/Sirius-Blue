@@ -11,6 +11,7 @@ public class MainCharacter : MonoBehaviour {
 
 	public GameObject magicballPrefab;
 	public GameObject wand;
+	public CameraController mainCamera;
 
 	Rigidbody2D rb2D;
 
@@ -21,8 +22,8 @@ public class MainCharacter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Movement
-		float translationHorizontal = Input.GetAxis("horizontal") * speed * Time.deltaTime;
-		float translationVertical = Input.GetAxis("vertical") * speed * Time.deltaTime;
+		float translationHorizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+		float translationVertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
 		rb2D.MovePosition(rb2D.position + new Vector2(translationHorizontal, translationVertical));
 
@@ -57,7 +58,7 @@ public class MainCharacter : MonoBehaviour {
 
 
 		// Magic
-		if(Input.GetAxis("shoot") > 0 && cooldownTimer > magicCooldown){
+		if(Input.GetAxis("Jump") > 0 && cooldownTimer > magicCooldown){
 			cooldownTimer = 0;
 			Instantiate(magicballPrefab, wand.transform.position, wand.transform.rotation);
 		}
@@ -73,7 +74,7 @@ public class MainCharacter : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.CompareTag ("endzone") == true) {
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			mainCamera.ShowEndScreen (true);
 		}
 	}
 }

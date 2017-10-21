@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour {
 	GameObject spawnPoint;
 	GameObject player;
 	public float secondsForLevel = 30f;
-	public GameObject countDownGUI;
 
 	[Header("Camera Boundaries")]
 	public float xMinimumPosition;
@@ -21,6 +20,12 @@ public class CameraController : MonoBehaviour {
 	[Header("Movement")]
 	public float speed = 4.0f;
 
+	[Header("GUI")]
+	bool inEndScreen = false;
+	public GameObject gameMenu;
+	public GameObject header;
+	public GameObject countDownGUI;
+
 	Camera cam;
 	Gradient g;
 
@@ -28,6 +33,8 @@ public class CameraController : MonoBehaviour {
 	void Start () {
 		spawnPoint = GameObject.FindGameObjectWithTag("Spawn");
 		player = Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+
+		player.GetComponent<MainCharacter> ().mainCamera = this;
 
 		cam = GetComponent<Camera>();
 		cam.clearFlags = CameraClearFlags.SolidColor;
@@ -46,6 +53,8 @@ public class CameraController : MonoBehaviour {
 		gak[1].alpha = 1.0F;
 		gak[1].time = 1.0F;
 		g.SetKeys(gck, gak);
+
+		Time.timeScale = 1.0f;
 	}
 	
 	// Update is called once per frame
@@ -71,7 +80,39 @@ public class CameraController : MonoBehaviour {
 		countDownGUI.GetComponent<Text>().text = Mathf.RoundToInt (secondsForLevel).ToString ();
 
 		if (secondsForLevel <= 0){
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			ShowEndScreen (false);
 		}
+
+		//	GAME MENU
+		// //////
+		if (Input.GetKeyDown("escape") && ! inEndScreen){
+			if (Time.timeScale == 1.0f) {          
+				Time.timeScale = 0.0f;   
+			} else {
+				Time.timeScale = 1.0f;
+			}
+			gameMenu.SetActive (!gameMenu.activeSelf);
+		}
+		if (Input.GetKeyDown("escape") && inEndScreen){
+			backToMenu ();
+		}
+	
+	}
+
+	public void ShowEndScreen(bool wasWin){
+		Time.timeScale = 0.0f;
+
+		gameMenu.SetActive (true);
+		inEndScreen = true;
+
+		if (wasWin) {
+			header.GetComponent<Text>().text = "Gewonnen";
+		} else {
+			header.GetComponent<Text>().text = "Verloren";
+		}
+	}
+
+	public void backToMenu(){
+		SceneManager.LoadScene("menu");
 	}
 }
