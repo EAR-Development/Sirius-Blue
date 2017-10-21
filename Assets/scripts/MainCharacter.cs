@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainCharacter : MonoBehaviour {
 	public float speed = 4.0f;
+	public float magicCooldown = 2.0f;
+
+	float cooldownTimer = 100.0f;
+
+	public GameObject magicballPrefab;
+	public GameObject wand;
+
 	Rigidbody2D rb2D;
 
 	void Start() {
@@ -13,10 +20,50 @@ public class MainCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Movement
 		float translationHorizontal = Input.GetAxis("horizontal") * speed * Time.deltaTime;
 		float translationVertical = Input.GetAxis("vertical") * speed * Time.deltaTime;
 
 		rb2D.MovePosition(rb2D.position + new Vector2(translationHorizontal, translationVertical));
+
+		Vector3 rot = transform.eulerAngles;
+
+		if (translationHorizontal > 0 && translationVertical > 0) {
+			rot.z = -45;
+		}
+		if (translationHorizontal > 0 && translationVertical < 0) {
+			rot.z = -135;
+		}
+		if (translationHorizontal > 0 && translationVertical == 0) {
+			rot.z = -90;
+		}
+		if (translationHorizontal < 0 && translationVertical > 0) {
+			rot.z = 45;
+		}
+		if (translationHorizontal < 0 && translationVertical < 0) {
+			rot.z = 135;
+		}
+		if (translationHorizontal < 0 && translationVertical == 0) {
+			rot.z = 90;
+		}
+		if (translationHorizontal == 0 && translationVertical > 0) {
+			rot.z = 0;
+		}
+		if (translationHorizontal == 0 && translationVertical < 0) {
+			rot.z = 180;
+		}
+		transform.eulerAngles = rot;
+
+
+
+		// Magic
+		if(Input.GetAxis("shoot") > 0 && cooldownTimer > magicCooldown){
+			cooldownTimer = 0;
+			Instantiate(magicballPrefab, wand.transform.position, wand.transform.rotation);
+		}
+
+		cooldownTimer += Time.deltaTime;
+
 	}
 
 	void OnCollisionEnter (Collision col)
