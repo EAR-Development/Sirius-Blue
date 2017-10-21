@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainCharacter : MonoBehaviour {
 	public float speed = 4.0f;
-	public Rigidbody2D rb2D;
+	Rigidbody2D rb2D;
 
 	void Start() {
 		rb2D = GetComponent<Rigidbody2D>();
@@ -21,5 +22,11 @@ public class MainCharacter : MonoBehaviour {
 	void OnCollisionEnter (Collision col)
 	{
 		Debug.Log ("Collision");
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.CompareTag ("endzone") == true) {
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
 	}
 }
