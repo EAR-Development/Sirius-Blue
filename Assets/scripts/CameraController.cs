@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour {
 	[Header("Player Spawn")]
 	public GameObject playerPrefab;
 	GameObject spawnPoint;
 	GameObject player;
+	public float secondsForLevel = 30f;
+	public GameObject countDownGUI;
 
 	[Header("Camera Boundaries")]
 	public float xMinimumPosition;
@@ -61,5 +65,13 @@ public class CameraController : MonoBehaviour {
 		float heightRatio = (transform.position.y - yMinimumPosition) / (yMaximumPosition - yMinimumPosition);
 		cam.backgroundColor = g.Evaluate(heightRatio);
 
+		//	DEATH TIMER
+		// //////
+		secondsForLevel -= Time.deltaTime;
+		countDownGUI.GetComponent<Text>().text = Mathf.RoundToInt (secondsForLevel).ToString ();
+
+		if (secondsForLevel <= 0){
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
 	}
 }

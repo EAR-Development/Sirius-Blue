@@ -19,7 +19,7 @@ public class MagicBall : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.CompareTag ("rubish")) {
-			other.gameObject.SetActive(false);
+			other.GetComponent<RubishController> ().markedToKill = true;
 		}
 		GameObject.Destroy (this.gameObject);
 	}

@@ -20,10 +20,16 @@ public class MotherController : MonoBehaviour {
 	void Update () {
 		float movement = 0;
 
-		if (!directionIsDown && ! topFreeCheck.GetComponent<CrabChecker>().isOverRubish && ! topFreeCheck.GetComponent<CrabChecker>().isOverGround ) {
+		if (!directionIsDown
+			&& ! topFreeCheck.GetComponent<CrabChecker>().isOverShell 
+			&& ! topFreeCheck.GetComponent<CrabChecker>().isOverRubish 
+			&& ! topFreeCheck.GetComponent<CrabChecker>().isOverGround ) {
 			movement = speed;
 		}
-		if (directionIsDown && ! bottomFreeCheck.GetComponent<CrabChecker>().isOverRubish && ! bottomFreeCheck.GetComponent<CrabChecker>().isOverGround ) {
+		if (directionIsDown 
+			&& ! bottomFreeCheck.GetComponent<CrabChecker>().isOverShell 
+			&& ! bottomFreeCheck.GetComponent<CrabChecker>().isOverRubish 
+			&& ! bottomFreeCheck.GetComponent<CrabChecker>().isOverGround ) {
 			movement = -speed;
 		}
 

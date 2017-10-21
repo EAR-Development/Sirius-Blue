@@ -7,6 +7,11 @@ public class CrabController : MonoBehaviour {
 	public GameObject leftFreeCheck;
 	public GameObject rightFreeCheck;
 
+	public GameObject leftFloorCheck;
+	public GameObject rightFloorCheck;
+
+	public GameObject shell;
+
 	public bool directionIsLeft = true;
 
 	public float speed = 1.0f;
@@ -20,21 +25,27 @@ public class CrabController : MonoBehaviour {
 	void Update () {
 		float movement = 0;
 
-		if (!directionIsLeft && ! rightFreeCheck.GetComponent<CrabChecker>().isOverRubish) {
+		if (!directionIsLeft && ! rightFreeCheck.GetComponent<CrabChecker>().isOverRubish 
+			&& ! rightFreeCheck.GetComponent<CrabChecker>().isOverGround 
+			&& rightFloorCheck.GetComponent<CrabChecker>().isOverGround) {
 			movement = speed;
 		}
-		if (directionIsLeft && ! leftFreeCheck.GetComponent<CrabChecker>().isOverRubish) {
+		if (directionIsLeft && ! leftFreeCheck.GetComponent<CrabChecker>().isOverRubish 
+			&& ! leftFreeCheck.GetComponent<CrabChecker>().isOverGround 
+			&& leftFloorCheck.GetComponent<CrabChecker>().isOverGround) {
 			movement = -speed;
 		}
 
 
 		if (!directionIsLeft && rightFreeCheck.GetComponent<CrabChecker>().isOverShell) {
 			GameObject.Destroy (rightFreeCheck.GetComponent<CrabChecker>().shell);
-			GameObject.Destroy (this.gameObject);
+			shell.SetActive (true);
+			directionIsLeft = true;
 		}
 		if (directionIsLeft && leftFreeCheck.GetComponent<CrabChecker>().isOverShell) {
 			GameObject.Destroy (leftFreeCheck.GetComponent<CrabChecker>().shell);
-			GameObject.Destroy (this.gameObject);
+			shell.SetActive (true);
+			directionIsLeft = false;
 		}
 
 
