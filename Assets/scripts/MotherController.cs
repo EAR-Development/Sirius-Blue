@@ -33,6 +33,6 @@ public class MotherController : MonoBehaviour {
 			movement = -speed;
 		}
 
-		transform.position = new Vector3 (transform.position.x, transform.position.y + movement, transform.position.z);
+		transform.position = new Vector3 (transform.position.x, transform.position.y + movement * Time.deltaTime, transform.position.z);
 	}
 }

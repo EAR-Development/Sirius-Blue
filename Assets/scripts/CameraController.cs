@@ -9,7 +9,9 @@ public class CameraController : MonoBehaviour {
 	public GameObject playerPrefab;
 	GameObject spawnPoint;
 	GameObject player;
-	public float secondsForLevel = 30f;
+	float secondsForLevel = 30f;
+	public float secondsForLevelEasy = 30f;
+	public float secondsForLevelHard = 30f;
 
 	[Header("Camera Boundaries")]
 	public float xMinimumPosition;
@@ -23,8 +25,11 @@ public class CameraController : MonoBehaviour {
 	[Header("GUI")]
 	bool inEndScreen = false;
 	public GameObject gameMenu;
-	public GameObject header;
+	public GameObject menuHeader;
+	public GameObject wonHeader;
+	public GameObject looseHeader;
 	public GameObject countDownGUI;
+	public GameObject levelSelector;
 
 	Camera cam;
 	Gradient g;
@@ -54,7 +59,20 @@ public class CameraController : MonoBehaviour {
 		gak[1].time = 1.0F;
 		g.SetKeys(gck, gak);
 
+		Time.timeScale = 0.0f;
+	}
+
+	public void runEasy(bool isEasy){
+		levelSelector.SetActive (false);
+
+		if (isEasy) {
+			secondsForLevel = secondsForLevelEasy;
+		} else {
+			secondsForLevel = secondsForLevelHard;
+		}
+
 		Time.timeScale = 1.0f;
+
 	}
 	
 	// Update is called once per frame
@@ -105,10 +123,12 @@ public class CameraController : MonoBehaviour {
 		gameMenu.SetActive (true);
 		inEndScreen = true;
 
+		menuHeader.SetActive (false);
+
 		if (wasWin) {
-			header.GetComponent<Text>().text = "Gewonnen";
+			wonHeader.SetActive (true);
 		} else {
-			header.GetComponent<Text>().text = "Verloren";
+			looseHeader.SetActive (true);
 		}
 	}
 

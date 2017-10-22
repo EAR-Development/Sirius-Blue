@@ -52,6 +52,6 @@ public class CrabController : MonoBehaviour {
 			
 		animator.SetBool("isWalking", Mathf.Abs(movement) > 0);
 
-		transform.position = new Vector3 (transform.position.x + movement, transform.position.y, transform.position.z);
+		transform.position = new Vector3 (transform.position.x + movement * Time.deltaTime, transform.position.y, transform.position.z);
 	}
 }
