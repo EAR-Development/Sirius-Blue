@@ -16,9 +16,11 @@ public class CrabController : MonoBehaviour {
 
 	public float speed = 1.0f;
 
+	Animator animator;
+
 	// Use this for initialization
 	void Start () {
-		
+		animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -47,7 +49,8 @@ public class CrabController : MonoBehaviour {
 			shell.SetActive (true);
 			directionIsLeft = false;
 		}
-
+			
+		animator.SetBool("isWalking", Mathf.Abs(movement) > 0);
 
 		transform.position = new Vector3 (transform.position.x + movement, transform.position.y, transform.position.z);
 	}

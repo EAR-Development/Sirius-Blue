@@ -31,7 +31,7 @@ public class ChildController : MonoBehaviour {
 
 			if (Mathf.Abs(transform.position.x - (mother.transform.position.x + randomOffset)) < 0.1) {
 				Vector3 rot = transform.eulerAngles;
-				rot.z = 180;
+				rot.z = -90;
 				transform.eulerAngles = rot;
 				hspeed = (mother.transform.position.y - transform.position.y) * speed * Time.deltaTime;
 			}

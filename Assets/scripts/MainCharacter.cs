@@ -36,42 +36,34 @@ public class MainCharacter : MonoBehaviour {
 		if (translationHorizontal > 0 && translationVertical > 0) {
 			rot.z = -45 + rotationoffset;
 			renderer.flipY = true;
-			Debug.Log ("1");
 		}
 		if (translationHorizontal > 0 && translationVertical < 0) {
 			rot.z = -135 + rotationoffset;
 			renderer.flipY = true;
-			Debug.Log ("2");
 		}
 		if (translationHorizontal > 0 && translationVertical == 0) {
 			rot.z = -90 + rotationoffset;
 			renderer.flipY = true;
-			Debug.Log ("3");
 		}
 		if (translationHorizontal < 0 && translationVertical > 0) {
 			rot.z = 45 + rotationoffset;
 			renderer.flipY = false;
-			Debug.Log ("4");
 		}
 		if (translationHorizontal < 0 && translationVertical < 0) {
 			rot.z = 135 + rotationoffset;
 			renderer.flipY = false;
-			Debug.Log ("5");
 		}
 		if (translationHorizontal < 0 && translationVertical == 0) {
 			rot.z = 90 + rotationoffset;
 			renderer.flipY = false;
-			Debug.Log ("6");
 		}
 		if (translationHorizontal == 0 && translationVertical > 0) {
 			rot.z = 0 + rotationoffset;
 			renderer.flipY = true;
-			Debug.Log ("7");
 		}
 		if (translationHorizontal == 0 && translationVertical < 0) {
 			rot.z = 180 + rotationoffset;
 			renderer.flipY = true;
-			Debug.Log ("8");
 		}
 		transform.eulerAngles = rot;
 
